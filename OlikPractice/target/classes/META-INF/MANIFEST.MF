@@ -1,0 +1,9 @@
+Manifest-Version: 1.0
+Built-By: 235777
+Build-Jdk: 11.0.2
+Implementation-Title: OlikPractice
+Implementation-Version: 0.0.1-SNAPSHOT
+Implementation-Vendor-Id: com.olik
+Implementation-URL: https://spring.io/projects/spring-boot/OlikPractice
+Created-By: Maven Integration for Eclipse
+
