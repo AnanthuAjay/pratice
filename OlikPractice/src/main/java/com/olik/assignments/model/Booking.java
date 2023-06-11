@@ -31,6 +31,8 @@ public class Booking {
     private LocalDate bookedFrom;
     private LocalDate bookedTo;
     
+    private double costToCustomer;
+    
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_id")
@@ -79,6 +81,14 @@ public class Booking {
 
 	public void setProduct(Product product) {
 		this.product = product;
+	}
+
+	public double getCostToCustomer() {
+		return costToCustomer;
+	}
+
+	public void setCostToCustomer(double costToCustomer) {
+		this.costToCustomer = costToCustomer;
 	}
     
     

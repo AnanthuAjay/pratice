@@ -1,6 +1,7 @@
 package com.olik.assignments.service;
 
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -69,13 +70,29 @@ public class ProductService {
 
 
     /*Adding a booking to a product*/
-    public Product addBookingToProduct(Long productId, Booking booking) {
+    public double addBookingToProduct(Long productId, Booking booking) {
         Optional<Product> optionalProduct = productRepository.findById(productId);
         if (optionalProduct.isPresent()) {
             Product product = optionalProduct.get();
-            product.getBookings().add(booking);
-            return productRepository.save(product);
+            LocalDate from = booking.getBookedFrom();
+            LocalDate to = booking.getBookedTo();
+
+            if (isProductAvailable(product, from, to)) {
+                long numberOfDays = ChronoUnit.DAYS.between(from, to);
+                double costToCustomer = numberOfDays * product.getCost();
+                booking.setCostToCustomer(costToCustomer);
+
+                product.getBookings().add(booking);
+                booking.setProduct(product);
+                productRepository.save(product);
+                
+                return costToCustomer;
+            } else {
+                throw new RuntimeException("Product is not available for the selected dates");
+            }
+        } else {
+            throw new RuntimeException("Product not found");
         }
-        throw new RuntimeException("Product not found");
     }
+
 }

@@ -56,8 +56,8 @@ public class ProductController {
             Booking booking = new Booking();
             booking.setBookedFrom(from);
             booking.setBookedTo(to);
-            productService.addBookingToProduct(productId, booking);
-            return new ResponseEntity<>("Booking successful", HttpStatus.OK);
+            double addedBookingToProduct = productService.addBookingToProduct(productId, booking);
+            return new ResponseEntity<>("Booking successful\nTotal Cost="+addedBookingToProduct, HttpStatus.OK);
         } else {
             return new ResponseEntity<>("Product not available for the selected dates", HttpStatus.BAD_REQUEST);
         }
